@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Project2020_SMNAggregator</string>
+    <string name="twitter_consumer_key">3X9yu57jtmPLuaF0XJdHYobxV</string>
+    <string name="twitter_consumer_secret">W9BEQQzEhytJhtwsmK5BNXmrKChroOCIux0HFLx9weLl1XHFrp</string>
 </resources>
