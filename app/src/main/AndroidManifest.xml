@@ -12,10 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2020_SMNAggregator">
-        <activity android:name=".ProfileActivity"
-                android:label="Login to Social Media"
-                android:parentActivityName=".MainActivity"
-                android:launchMode="singleTop">
+        <activity android:name=".HashtagActivity"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Login to Social Media"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

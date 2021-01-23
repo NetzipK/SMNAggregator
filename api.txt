@@ -1,5 +1,97 @@
 API Key: 3X9yu57jtmPLuaF0XJdHYobxV
 API Secret Key: W9BEQQzEhytJhtwsmK5BNXmrKChroOCIux0HFLx9weLl1XHFrp
 Bearer Token: SVafZQihuONzRfkHOXvfLcABOQKU2KXpIXgspX5mkbDuNRpCiW
-Access Token: 1305491884593352704-yiAsReALEcNBDvI9iT81303SRtXpg2
-Access Token Secret: Ck555808Xxa7iEJDz0QxCY2UAH9sovPUDjJ1UzS1zCVSm
+Access Token: 1305491884593352704-0WQ1nu3t0U0TVgR2Qau0vU6twlFqCP
+Access Token Secret: 20uVfjH6UsvDC9yCiGuFCyKbLPZ6keBiK0TWnfTfectif
+
+{
+    "id": "5a110d312052166f",
+    "name": "San Francisco",
+    "full_name": "San Francisco, CA",
+    "country": "United States",
+    "country_code": "US",
+    "url": "https://api.twitter.com/1.1/geo/id/5a110d312052166f.json",
+    "place_type": "city",
+    "attributes": {
+        "162772:place_id": "0667000",
+        "geotagCount": "4731",
+        "189390:id": "san-francisco-ca",
+        "162772:pop100": "776733"
+    },
+    "bounding_box": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -122.514926,
+                    37.708075
+                ],
+                [
+                    -122.514926,
+                    37.833238
+                ],
+                [
+                    -122.357031,
+                    37.833238
+                ],
+                [
+                    -122.357031,
+                    37.708075
+                ],
+                [
+                    -122.514926,
+                    37.708075
+                ]
+            ]
+        ]
+    },
+    "centroid": [
+        -122.4461400159226,
+        37.759828999999996
+    ],
+    "contained_within": [
+        {
+            "id": "5122804691e5fecc",
+            "name": "SAN FRANCISCO-OAK-SAN JOSE",
+            "full_name": "SAN FRANCISCO-OAK-SAN JOSE",
+            "country": "",
+            "country_code": "",
+            "url": "https://api.twitter.com/1.1/geo/id/5122804691e5fecc.json",
+            "place_type": "admin",
+            "attributes": {},
+            "bounding_box": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -124.022819,
+                            36.893329
+                        ],
+                        [
+                            -124.022819,
+                            40.002141
+                        ],
+                        [
+                            -121.208156,
+                            40.002141
+                        ],
+                        [
+                            -121.208156,
+                            36.893329
+                        ],
+                        [
+                            -124.022819,
+                            36.893329
+                        ]
+                    ]
+                ]
+            },
+            "centroid": [
+                -122.62595430012564,
+                38.447735
+            ]
+        }
+    ],
+    "polylines": [],
+    "geometry": null
+}

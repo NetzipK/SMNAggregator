@@ -13,8 +13,6 @@ public class TagsJsonParser {
         List<Tag> tagList = new ArrayList<>();
 
         try {
-//            JSONObject json = new JSONObject(tagJsonData);
-
             JSONArray jsonTagArray = new JSONArray(tagJsonData);
             JSONObject jsonObject = jsonTagArray.getJSONObject(0);
             jsonTagArray = jsonObject.getJSONArray("trends");

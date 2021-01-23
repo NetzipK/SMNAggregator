@@ -1,6 +1,7 @@
 package gr.uom.project2020_smnaggregator;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,13 +13,17 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
 
     public static final String TAG = "MyAppGetTrendingTask";
-    public static final String REMOTE_API = "https://api.twitter.com/1.1/trends/place.json?id=23424833";
-    public static final String POST_API = "https://api.twitter.com/1.1/statuses/destroy/1351255323093458949.json";
+    public static final String REMOTE_API = "https://api.twitter.com/1.1/trends/place.json?id=";
+    public static final String ACCOUNT_API = "https://api.twitter.com/1.1/account/settings.json";
+    public static final String TEST_API = "https://api.twitter.com/2/tweets/search/recent?query=%23paoofi";
 
     public List<Tag> tagList;
 
@@ -31,18 +36,18 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
 
     @Override
     protected List<Tag> doInBackground(String... strings) {
-        String tagJson = downloadRestData(REMOTE_API, strings[0], strings[1]);
+        OAuth10aService service = new ServiceBuilder(strings[0])
+                .apiSecret(strings[1])
+                .build(TwitterApi.instance());
+        String tagJson = downloadRestData(REMOTE_API, service);
         TagsJsonParser jsonParser = new TagsJsonParser();
         return jsonParser.parsePostData(tagJson);
     }
 
-    private String downloadRestData(String remoteUrl, String key, String secret)  {
+    private String downloadRestData(String remoteUrl, OAuth10aService service)  {
         StringBuilder sb = new StringBuilder();
         sb.append("");
-        OAuth10aService service = new ServiceBuilder(key)
-                .apiSecret(secret)
-                .build(TwitterApi.instance());
-        OAuthRequest request = new OAuthRequest(Verb.GET, remoteUrl);
+        OAuthRequest request = new OAuthRequest(Verb.GET, remoteUrl + getWoeid(service));
         OAuth1AccessToken accessToken = new OAuth1AccessToken("", "");
         service.signRequest(accessToken, request);
         try {
@@ -52,7 +57,8 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
             Log.e(TAG, "Error happened!", e);
         }
 
-//        request = new OAuthRequest(Verb.POST, POST_API);
+//        sb.append("\n");
+//        request = new OAuthRequest(Verb.GET, TEST_API);
 //        SharedPreferences sharedPref = context.getSharedPreferences("access_token", Context.MODE_PRIVATE);
 //        String acc_token = sharedPref.getString("access_token", "");
 //        String token_sec = sharedPref.getString("access_token_secret", "");
@@ -65,8 +71,31 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
 //        } catch (Exception e) {
 //            Log.e(TAG, "Error happened!", e);
 //        }
-        Log.d(TAG, sb.toString());
+//        Log.d(TAG, sb.toString());
         return sb.toString();
+    }
+
+    private String getWoeid(OAuth10aService service) {
+        SharedPreferences sharedPref = context.getSharedPreferences("access_token", Context.MODE_PRIVATE);
+        String acc_token = sharedPref.getString("access_token", "");
+        String token_sec = sharedPref.getString("access_token_secret", "");
+        Log.d(TAG, acc_token + "  " + token_sec);
+        if (acc_token == "" || token_sec == "") {
+            return "23424833";
+        }
+        OAuthRequest request = new OAuthRequest(Verb.GET, ACCOUNT_API);
+        OAuth1AccessToken accessToken = new OAuth1AccessToken(acc_token, token_sec);
+        service.signRequest(accessToken, request);
+        try {
+            Response response = service.execute(request);
+            String json = response.getBody();
+            Log.d(TAG, json);
+            JSONObject jsonObject = new JSONObject(json);
+            jsonObject = jsonObject.getJSONArray("trend_location").getJSONObject(0);
+            return jsonObject.getString("woeid");
+        } catch (Exception e) {
+            return "23424833";
+        }
     }
 
     @Override
