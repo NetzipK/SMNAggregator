@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2020_SMNAggregator">
-        <activity android:name=".HashtagActivity"></activity>
+        <activity android:name=".HashtagActivity"
+            android:label="Posts"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".ProfileActivity"
             android:label="Login to Social Media"
@@ -22,7 +29,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".HomeActivity" />
         <activity
             android:name=".MainActivity"
             android:label="SMN Aggregator">

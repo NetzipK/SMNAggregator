@@ -21,7 +21,7 @@ public class TrendsArrayAdapter extends ArrayAdapter<Tag> {
     private final LayoutInflater inflater;
     private final int layoutResource;
 
-    private ListView tagListView;
+    private final ListView tagListView;
 
     public TrendsArrayAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Tag> obj, ListView listView) {
         super(context, resource, obj);
@@ -61,6 +61,26 @@ public class TrendsArrayAdapter extends ArrayAdapter<Tag> {
         ViewHolder(View view) {
             hashtag = view.findViewById(R.id.hashtagText);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TrendsArrayAdapter{" +
+                "tagList=" + tagList +
+                ", inflater=" + inflater +
+                ", layoutResource=" + layoutResource +
+                ", tagListView=" + tagListView +
+                '}';
+    }
+
+    public ArrayList<Tag> getTagList() {
+        return new ArrayList<>(tagList);
+    }
+
+    @Nullable
+    @Override
+    public Tag getItem(int position) {
+        return tagList.get(position);
     }
 
     public void setTagList(List<Tag> tagList) {
