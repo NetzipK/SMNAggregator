@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -52,42 +53,12 @@ public class ProfileActivity extends AppCompatActivity {
             TextView twtTextView = findViewById(R.id.twtLoggedIn);
             twtTextView.setText("Logged in on twitter as " + session.getUserName());
             TwitterAuthToken authToken = session.getAuthToken();
-            Log.d(TAG, authToken.toString());
-            HttpURLConnection httpConnection = null;
-            BufferedReader bufferedReader = null;
-            StringBuilder response = new StringBuilder();
-            try {
-                URL url = new URL("https://api.twitter.com/1.1/trends/place.json?id=23424833");
-                httpConnection = (HttpURLConnection) url.openConnection();
-                httpConnection.setRequestMethod("GET");
-
-                httpConnection.setRequestProperty("Authorization", "Basic " + authToken.token);
-                httpConnection.setRequestProperty("Content-Type",
-                        "application/json");
-                httpConnection.connect();
-
-                bufferedReader = new BufferedReader(new InputStreamReader(
-                        httpConnection.getInputStream()));
-
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                Log.d(TAG,
-                        "GET response code: "
-                                + String.valueOf(httpConnection
-                                .getResponseCode()));
-                Log.d(TAG, "JSON response: " + response.toString());
-            } catch (Exception e) {
-                Log.e(TAG, "GET error: " + Log.getStackTraceString(e));
-            } finally {
-                if (httpConnection != null) {
-                    httpConnection.disconnect();
-                }
-            }
-
-            Log.d(TAG, response.toString());
+            SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("access_token", authToken.token);
+            editor.putString("access_token_secret", authToken.secret);
+            editor.commit();
+            Log.d(TAG, sharedPreferences.getString("access_token", "NULL") + "  " + sharedPreferences.getString("access_token_secret", "NULL"));
         }
 
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -95,6 +66,11 @@ public class ProfileActivity extends AppCompatActivity {
             public void success(Result<TwitterSession> result) {
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
                 TwitterAuthToken authToken = session.getAuthToken();
+                SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("access_token", authToken.token);
+                editor.putString("access_token_secret", authToken.secret);
+                editor.commit();
 
                 Log.d(TAG, session.toString());
                 loginMethod(session);

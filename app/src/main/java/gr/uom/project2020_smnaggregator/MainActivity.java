@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     TwitterLoginButton loginButton;
     public static final String TAG = "MyApp";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         ListView tagsListView = findViewById(R.id.hashtagsListView);
 
+        TrendsArrayAdapter trendsArrayAdapter = new TrendsArrayAdapter(this, R.layout.list_tags, new ArrayList<Tag>(), tagsListView);
+
+        GetTrendingTask getTrendingTaskObject = new GetTrendingTask(trendsArrayAdapter, this);
+
+        getTrendingTaskObject.execute(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
     }
 
     @Override

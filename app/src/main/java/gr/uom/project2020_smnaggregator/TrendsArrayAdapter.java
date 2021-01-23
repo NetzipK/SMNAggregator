@@ -11,28 +11,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostsArrayAdapter extends ArrayAdapter<Post> {
+public class TrendsArrayAdapter extends ArrayAdapter<Tag> {
 
-    private List<Post> postList;
+    private List<Tag> tagList;
     private final LayoutInflater inflater;
     private final int layoutResource;
 
-    private ListView postListView;
+    private ListView tagListView;
 
-    public PostsArrayAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Post> obj, ListView listView) {
+    public TrendsArrayAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Tag> obj, ListView listView) {
         super(context, resource, obj);
-        postList = obj;
+        tagList = obj;
         layoutResource = resource;
         inflater = LayoutInflater.from(context);
-        postListView = listView;
+        tagListView = listView;
     }
 
     @Override
     public int getCount() {
-        return postList.size();
+        return tagList.size();
     }
 
     @NonNull
@@ -47,32 +48,23 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
         } else
             viewHolder = (ViewHolder) convertView.getTag();
 
-        Post currentPost = postList.get(position);
+        Tag currentTag = tagList.get(position);
 
-        viewHolder.postMedia.setText(currentPost.getPostMedia());
-        viewHolder.postUserName.setText(currentPost.getPostUserName());
-        viewHolder.postDate.setText(currentPost.getPostDate());
-        viewHolder.postBody.setText(currentPost.getPostBody());
+        viewHolder.hashtag.setText(currentTag.getHashtag());
 
         return convertView;
     }
 
     private class ViewHolder {
-        final TextView postMedia;
-        final TextView postUserName;
-        final TextView postDate;
-        final TextView postBody;
+        public TextView hashtag;
 
         ViewHolder(View view) {
-            postMedia = view.findViewById(R.id.postMediaTxt);
-            postUserName = view.findViewById(R.id.hashtagText);
-            postDate = view.findViewById(R.id.postDateTxt);
-            postBody = view.findViewById(R.id.postBodyTxt);
+            hashtag = view.findViewById(R.id.hashtagText);
         }
     }
 
-    public void setPostList(List<Post> postList) {
-        this.postList = postList;
-        postListView.setAdapter(this);
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
+        tagListView.setAdapter(this);
     }
 }
