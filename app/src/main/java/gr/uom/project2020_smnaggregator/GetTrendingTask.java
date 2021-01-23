@@ -1,7 +1,6 @@
 package gr.uom.project2020_smnaggregator;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,16 +9,18 @@ import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
-import com.github.scribejava.core.oauth.OAuthService;
 
-public class GetTrendingTask extends AsyncTask<String, Void, String> {
+import java.util.List;
+
+public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
 
     public static final String TAG = "MyAppGetTrendingTask";
     public static final String REMOTE_API = "https://api.twitter.com/1.1/trends/place.json?id=23424833";
     public static final String POST_API = "https://api.twitter.com/1.1/statuses/destroy/1351255323093458949.json";
+
+    public List<Tag> tagList;
 
     private Context context;
     private TrendsArrayAdapter adapter;
@@ -29,10 +30,10 @@ public class GetTrendingTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected List<Tag> doInBackground(String... strings) {
         String tagJson = downloadRestData(REMOTE_API, strings[0], strings[1]);
-
-        return tagJson;
+        TagsJsonParser jsonParser = new TagsJsonParser();
+        return jsonParser.parsePostData(tagJson);
     }
 
     private String downloadRestData(String remoteUrl, String key, String secret)  {
@@ -50,7 +51,6 @@ public class GetTrendingTask extends AsyncTask<String, Void, String> {
         } catch (Exception e) {
             Log.e(TAG, "Error happened!", e);
         }
-        sb.append("\n");
 
 //        request = new OAuthRequest(Verb.POST, POST_API);
 //        SharedPreferences sharedPref = context.getSharedPreferences("access_token", Context.MODE_PRIVATE);
@@ -65,12 +65,15 @@ public class GetTrendingTask extends AsyncTask<String, Void, String> {
 //        } catch (Exception e) {
 //            Log.e(TAG, "Error happened!", e);
 //        }
-
+        Log.d(TAG, sb.toString());
         return sb.toString();
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        Log.d(TAG, s);
+    protected void onPostExecute(List<Tag> tags) {
+        tagList = tags;
+        for (Tag tag : tagList)
+            Log.i(TAG, tag.toString());
+        adapter.setTagList(tagList);
     }
 }
