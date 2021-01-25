@@ -13,7 +13,6 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -29,6 +28,7 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
 
     private Context context;
     private TrendsArrayAdapter adapter;
+
     public GetTrendingTask(TrendsArrayAdapter adapter, Context context) {
         this.adapter = adapter;
         this.context = context;
@@ -41,7 +41,7 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
                 .build(TwitterApi.instance());
         String tagJson = downloadRestData(REMOTE_API, service);
         TagsJsonParser jsonParser = new TagsJsonParser();
-        return jsonParser.parsePostData(tagJson);
+        return jsonParser.parseTagData(tagJson);
     }
 
     private String downloadRestData(String remoteUrl, OAuth10aService service)  {

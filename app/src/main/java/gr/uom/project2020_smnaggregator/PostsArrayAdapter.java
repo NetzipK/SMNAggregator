@@ -65,7 +65,7 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
 
         ViewHolder(View view) {
             postMedia = view.findViewById(R.id.postMediaTxt);
-            postUserName = view.findViewById(R.id.hashtagText);
+            postUserName = view.findViewById(R.id.postUserNameTxt);
             postDate = view.findViewById(R.id.postDateTxt);
             postBody = view.findViewById(R.id.postBodyTxt);
         }

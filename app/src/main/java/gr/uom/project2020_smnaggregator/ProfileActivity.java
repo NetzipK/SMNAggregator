@@ -11,6 +11,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Result;
@@ -23,15 +29,16 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Arrays;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "MyApp";
-    TwitterLoginButton loginButton;
+
+    CallbackManager callbackManager;
+
+    LoginButton facebookLoginButton;
+    TwitterLoginButton twitterLoginButton;
     TextView username;
 
     @Override
@@ -43,9 +50,33 @@ public class ProfileActivity extends AppCompatActivity {
                 .debug(true)
                 .build();
         Twitter.initialize(config);
+        callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_profile);
 
-        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+        twitterLoginButton = (TwitterLoginButton) findViewById(R.id.tw_login_button);
+        facebookLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+
+        facebookLoginButton.setPermissions(Arrays.asList("email"));
+
+        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                boolean loggedIn = accessToken != null && !accessToken.isExpired();
+                Log.d(TAG, loggedIn ? "Logged In" : "Not Logged In");
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
         TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if (session != null) {
             Log.d(TAG, "Session found with username: " + session.getUserName());
@@ -61,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d(TAG, sharedPreferences.getString("access_token", "NULL") + "  " + sharedPreferences.getString("access_token_secret", "NULL"));
         }
 
-        loginButton.setCallback(new Callback<TwitterSession>() {
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
@@ -97,7 +128,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Pass the activity result to the login button.
-        loginButton.onActivityResult(requestCode, resultCode, data);
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

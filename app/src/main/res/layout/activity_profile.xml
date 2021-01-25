@@ -6,17 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:id="@+id/login_button"
+        android:id="@+id/tw_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/fb_login_button" />
 
     <TextView
         android:id="@+id/usernameTextView"
@@ -33,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/login_button"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintStart_toStartOf="@+id/tw_login_button"
+        app:layout_constraintTop_toBottomOf="@+id/tw_login_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

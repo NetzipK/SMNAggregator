@@ -2,4 +2,6 @@
     <string name="app_name">Project2020_SMNAggregator</string>
     <string name="twitter_consumer_key">3X9yu57jtmPLuaF0XJdHYobxV</string>
     <string name="twitter_consumer_secret">W9BEQQzEhytJhtwsmK5BNXmrKChroOCIux0HFLx9weLl1XHFrp</string>
+    <string name="facebook_app_id">2802676183325479</string>
+    <string name="fb_login_protocol_scheme">fb2802676183325479</string>
 </resources>

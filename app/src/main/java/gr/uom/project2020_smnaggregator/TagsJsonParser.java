@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TagsJsonParser {
-    public List<Tag> parsePostData(String tagJsonData) {
+
+    public static final String TAG = "MyAppTagsJsonParser";
+
+    public List<Tag> parseTagData(String tagJsonData) {
         List<Tag> tagList = new ArrayList<>();
 
         try {
@@ -29,7 +32,7 @@ public class TagsJsonParser {
                 }
             }
         } catch (Exception e) {
-            Log.e("MyAppTagsJsonParser", "Error in json parsing", e);
+            Log.e(TAG, "Error in json parsing", e);
         }
 
         return tagList;

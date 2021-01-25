@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void startHashtagActivity(String hashtag) {
         Intent intent = new Intent(MainActivity.this, HashtagActivity.class);
+        if (hashtag.charAt(0) != '#')
+            hashtag = '#' + hashtag;
         intent.putExtra("hashtag", hashtag);
         startActivity(intent);
     }

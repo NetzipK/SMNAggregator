@@ -31,8 +31,7 @@ android {
 dependencies {
     implementation 'com.twitter.sdk.android:twitter:3.1.1'
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
-    implementation 'com.facebook.android:facebook-share:[5,6)'
-    // https://mvnrepository.com/artifact/com.github.scribejava/scribejava
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.github.scribejava:scribejava-apis:8.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
