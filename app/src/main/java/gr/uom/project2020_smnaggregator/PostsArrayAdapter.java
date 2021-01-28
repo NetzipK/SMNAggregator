@@ -63,7 +63,7 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(16, 0, 0, 0);
                 imgView.setLayoutParams(lp);
-                Picasso.with(context).load(imgUrl).resize(350, 350).into(imgView);
+                Picasso.with(context).load(imgUrl).resize(0, 350).into(imgView);
             }
         }
 

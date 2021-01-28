@@ -8,4 +8,10 @@
     android:orderInCategory="100"
     android:icon="@drawable/ic_user_profile"
     app:showAsAction="always" />
+    <item android:id="@+id/action_post"
+        android:title="Post"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_post"
+        app:showAsAction="always"
+        />
 </menu>
