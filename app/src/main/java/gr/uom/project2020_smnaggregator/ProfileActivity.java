@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     LoginButton facebookLoginButton;
     TwitterLoginButton twitterLoginButton;
-    TextView username;
+    Button twitterLogoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
         twitterLoginButton = (TwitterLoginButton) findViewById(R.id.tw_login_button);
         facebookLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
 
+        twitterLogoutButton = findViewById(R.id.tw_logout_button);
+
         facebookLoginButton.setPermissions(Arrays.asList("email"));
 
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -68,43 +72,30 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-
+                Toast.makeText(getApplicationContext(), "Login canceled by user.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(getApplicationContext(), "Login fail: " + error, Toast.LENGTH_LONG).show();
             }
         });
 
         TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if (session != null) {
             Log.d(TAG, "Session found with username: " + session.getUserName());
-//            loginButton.setEnabled(false);
-            TextView twtTextView = findViewById(R.id.twtLoggedIn);
-            twtTextView.setText("Logged in on twitter as " + session.getUserName());
-            TwitterAuthToken authToken = session.getAuthToken();
-            SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("access_token", authToken.token);
-            editor.putString("access_token_secret", authToken.secret);
-            editor.commit();
-            Log.d(TAG, sharedPreferences.getString("access_token", "NULL") + "  " + sharedPreferences.getString("access_token_secret", "NULL"));
+            twitterLogin(session);
+        } else {
+            twitterLoginButton.setVisibility(View.VISIBLE);
         }
 
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-                TwitterAuthToken authToken = session.getAuthToken();
-                SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("access_token", authToken.token);
-                editor.putString("access_token_secret", authToken.secret);
-                editor.commit();
+                twitterLogin(session);
 
                 Log.d(TAG, session.toString());
-                loginMethod(session);
             }
 
             @Override
@@ -112,15 +103,42 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Login fail: " + exception, Toast.LENGTH_LONG).show();
             }
         });
+
+        twitterLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwitterCore.getInstance().getSessionManager().clearActiveSession();
+
+                SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("access_token", null);
+                editor.putString("access_token_secret", null);
+                editor.commit();
+
+                twitterLogoutButton.setVisibility(View.INVISIBLE);
+                TextView twtTextView = findViewById(R.id.twtLoggedIn);
+                twtTextView.setText("");
+                twitterLoginButton.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Successfully logged out from twitter.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    private void loginMethod(TwitterSession session) {
-        String usernameS = session.getUserName();
-//        Intent intent = new Intent(this, HomeActivity.class);
-//        intent.putExtra("username", username);
-//        startActivity(intent);
-        username = findViewById(R.id.usernameTextView);
-        username.setText("Hello, " + usernameS);
+    private void twitterLogin(TwitterSession session) {
+        TwitterAuthToken authToken = session.getAuthToken();
+        SharedPreferences sharedPreferences = getSharedPreferences("access_token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("access_token", authToken.token);
+        editor.putString("access_token_secret", authToken.secret);
+        editor.commit();
+
+        twitterLogoutButton.setVisibility(View.VISIBLE);
+        TextView twtTextView = findViewById(R.id.twtLoggedIn);
+        twitterLoginButton.setVisibility(View.INVISIBLE);
+        twtTextView.setText("Logged in on Twitter as " + session.getUserName());
+
+        Log.d(TAG, sharedPreferences.getString("access_token", "NULL") + "  " + sharedPreferences.getString("access_token_secret", "NULL"));
     }
 
     @Override

@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,7 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
     private List<Post> postList;
     private final LayoutInflater inflater;
     private final int layoutResource;
+    private Context context;
 
     private ListView postListView;
 
@@ -28,8 +33,8 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
         layoutResource = resource;
         inflater = LayoutInflater.from(context);
         postListView = listView;
+        this.context = context;
     }
-
     @Override
     public int getCount() {
         return postList.size();
@@ -48,11 +53,25 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         Post currentPost = postList.get(position);
+        viewHolder.linearLayout.removeAllViews();
+        int imgSize = currentPost.getPostImages().size();
+        ArrayList<String> postImages = currentPost.getPostImages();
+        if (imgSize > 0) {
+            for (String imgUrl : postImages) {
+                ImageView imgView = new ImageView(context);
+                viewHolder.linearLayout.addView(imgView);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(16, 0, 0, 0);
+                imgView.setLayoutParams(lp);
+                Picasso.with(context).load(imgUrl).resize(350, 350).into(imgView);
+            }
+        }
 
         viewHolder.postMedia.setText(currentPost.getPostMedia());
         viewHolder.postUserName.setText(currentPost.getPostUserName());
         viewHolder.postDate.setText(currentPost.getPostDate());
         viewHolder.postBody.setText(currentPost.getPostBody());
+
 
         return convertView;
     }
@@ -62,12 +81,14 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
         final TextView postUserName;
         final TextView postDate;
         final TextView postBody;
+        final LinearLayout linearLayout;
 
         ViewHolder(View view) {
             postMedia = view.findViewById(R.id.postMediaTxt);
             postUserName = view.findViewById(R.id.postUserNameTxt);
             postDate = view.findViewById(R.id.postDateTxt);
             postBody = view.findViewById(R.id.postBodyTxt);
+            linearLayout = view.findViewById(R.id.imageLayout);
         }
     }
 

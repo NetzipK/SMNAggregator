@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         trendsArrayAdapter = new TrendsArrayAdapter(this, R.layout.list_tags, new ArrayList<Tag>(), tagsListView);
         GetTrendingTask getTrendingTaskObject = new GetTrendingTask(trendsArrayAdapter, this);
         getTrendingTaskObject.execute(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
-        //todo: OnClick on popular hashtags switch to HashtagActivity with EXTRA selected hashtag
         tagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 startHashtagActivity(item.getHashtag());
             }
         });
-        //todo: EditText on click done switch to HastagActivity with EXTRA typed hashtag
         search = findViewById(R.id.searchText);
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

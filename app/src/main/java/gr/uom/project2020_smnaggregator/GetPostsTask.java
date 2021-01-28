@@ -31,7 +31,6 @@ public class GetPostsTask extends AsyncTask<String, Void, List<Post>> {
     public GetPostsTask(PostsArrayAdapter adapter, Context context, String hashtag) {
         this.adapter = adapter;
         this.context = context;
-        hashtag = hashtag.substring(1);
         try {
             this.hashtag = URLEncoder.encode(hashtag, "utf-8");
         } catch (Exception e) {
@@ -51,7 +50,7 @@ public class GetPostsTask extends AsyncTask<String, Void, List<Post>> {
 
     private String downloadRestData(String remoteUrl, OAuth10aService service) {
         StringBuilder sb = new StringBuilder();
-        sb.append("");
+        sb.append("{\"twitter\":");
         Log.d(TAG, remoteUrl + hashtag);
         OAuthRequest request = new OAuthRequest(Verb.GET, remoteUrl + hashtag);
         SharedPreferences sharedPref = context.getSharedPreferences("access_token", Context.MODE_PRIVATE);
@@ -59,13 +58,18 @@ public class GetPostsTask extends AsyncTask<String, Void, List<Post>> {
         String token_sec = sharedPref.getString("access_token_secret", "");
         OAuth1AccessToken accessToken = new OAuth1AccessToken(acc_token, token_sec);
         service.signRequest(accessToken, request);
-
+        Log.d(TAG, acc_token + " " + token_sec);
         try {
             Response response = service.execute(request);
             sb.append(response.getBody());
         } catch (Exception e) {
             Log.e(TAG, "Error happened!", e);
         }
+        sb.append("},\"instagram\":");
+        //todo: Add instagram download data
+        sb.append("{}");
+
+        sb.append("}");
         Log.d(TAG, sb.toString());
         return sb.toString();
     }

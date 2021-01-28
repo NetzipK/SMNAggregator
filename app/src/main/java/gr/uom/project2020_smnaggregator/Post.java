@@ -1,10 +1,22 @@
 package gr.uom.project2020_smnaggregator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Post {
     private String postUserName;
     private String postMedia;
     private String postDate;
     private String postBody;
+    private ArrayList<String> postImages = new ArrayList<>();
+
+    public ArrayList<String> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(ArrayList<String> postImages) {
+        this.postImages = postImages;
+    }
 
     public String getPostUserName() {
         return postUserName;
@@ -45,6 +57,7 @@ public class Post {
                 ", postMedia='" + postMedia + '\'' +
                 ", postDate='" + postDate + '\'' +
                 ", postBody='" + postBody + '\'' +
+                ", postImages=" + postImages +
                 '}';
     }
 }
