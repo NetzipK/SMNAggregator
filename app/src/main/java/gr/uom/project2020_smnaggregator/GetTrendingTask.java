@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
+public class GetTrendingTask extends AsyncTask<String, Integer, List<Tag>> {
 
     public static final String TAG = "MyAppGetTrendingTask";
     public static final String REMOTE_API = "https://api.twitter.com/1.1/trends/place.json?id=";
@@ -104,5 +104,6 @@ public class GetTrendingTask extends AsyncTask<String, Void, List<Tag>> {
         for (Tag tag : tagList)
             Log.i(TAG, tag.toString());
         adapter.setTagList(tagList);
+        super.onPostExecute(tags);
     }
 }

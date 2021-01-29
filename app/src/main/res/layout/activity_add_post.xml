@@ -41,10 +41,10 @@
         android:text="Images:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/selectImageButton" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -53,20 +53,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/postBodyEditText" />
 
-    <LinearLayout
-        android:id="@+id/imagesLinearLayout"
-        android:layout_width="0dp"
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/imagesLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/noImageTextView"
@@ -74,10 +78,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="No Image Selected"
-        app:layout_constraintBottom_toBottomOf="@+id/imagesLinearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/imagesLinearLayout"
-        app:layout_constraintStart_toStartOf="@+id/imagesLinearLayout"
-        app:layout_constraintTop_toTopOf="@+id/imagesLinearLayout" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="@+id/scrollView"
+        app:layout_constraintTop_toTopOf="@+id/scrollView" />
 
     <TextView
         android:id="@+id/textView4"
@@ -88,7 +93,7 @@
         android:text="Social Media to Post"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagesLinearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -123,7 +128,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/submitButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
