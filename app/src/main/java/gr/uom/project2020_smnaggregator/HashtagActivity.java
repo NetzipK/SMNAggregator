@@ -2,6 +2,7 @@ package gr.uom.project2020_smnaggregator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -35,5 +36,13 @@ public class HashtagActivity extends AppCompatActivity {
         postsArrayAdapter = new PostsArrayAdapter(this, R.layout.list_posts, new ArrayList<Post>(), postsListView);
         GetPostsTask getPostsTaskObject = new GetPostsTask(postsArrayAdapter, this, hashtag);
         getPostsTaskObject.execute(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
+
+        postsListView.setOnItemClickListener(((parent, view, position, id) -> {
+            Post post = (Post) parent.getItemAtPosition(position);
+            Intent intent = new Intent(this, ShowPostActivity.class);
+            intent.putExtra("id", post.getPostId());
+            intent.putExtra("hashtag", hashtag);
+            startActivity(intent);
+        }));
     }
 }

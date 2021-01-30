@@ -31,6 +31,7 @@ public class PostsJsonParser {
                 post.setPostDate(postCreatedAt);
                 post.setPostUserName(postUserName);
                 post.setPostMedia("Twitter");
+                post.setPostId(postJsonObj.getLong("id"));
 
                 if (postJsonObj.getJSONObject("entities").has("media")) {
                     JSONArray postImages = postJsonObj.getJSONObject("entities").getJSONArray("media");

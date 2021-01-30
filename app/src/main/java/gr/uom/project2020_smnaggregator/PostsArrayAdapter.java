@@ -92,6 +92,12 @@ public class PostsArrayAdapter extends ArrayAdapter<Post> {
         }
     }
 
+    @Nullable
+    @Override
+    public Post getItem(int position) {
+        return postList.get(position);
+    }
+
     public void setPostList(List<Post> postList) {
         this.postList = postList;
         postListView.setAdapter(this);

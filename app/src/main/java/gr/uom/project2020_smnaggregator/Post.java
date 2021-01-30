@@ -8,6 +8,16 @@ public class Post {
     private String postMedia;
     private String postDate;
     private String postBody;
+    private long postId;
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(long postId) {
+        this.postId = postId;
+    }
+
     private ArrayList<String> postImages = new ArrayList<>();
 
     public ArrayList<String> getPostImages() {
@@ -57,6 +67,7 @@ public class Post {
                 ", postMedia='" + postMedia + '\'' +
                 ", postDate='" + postDate + '\'' +
                 ", postBody='" + postBody + '\'' +
+                ", postId=" + postId +
                 ", postImages=" + postImages +
                 '}';
     }
