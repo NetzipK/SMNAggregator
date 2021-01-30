@@ -37,6 +37,7 @@ public class AddPostActivity extends AppCompatActivity {
     private TextView noImageTextView;
     private LinearLayout linearLayout;
     private EditText postBody;
+    private Boolean isComment;
 
     ArrayList<Uri> selectedImages = new ArrayList<>();
 
@@ -45,11 +46,20 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
+        Intent intent = getIntent();
+        isComment = intent.getStringExtra("replyId") != null && intent.getStringExtra("replyUser") != null;
+
         selectImageButton = findViewById(R.id.selectImageButton);
         submitButton = findViewById(R.id.submitButton);
         noImageTextView = findViewById(R.id.noImageTextView);
         linearLayout = findViewById(R.id.imagesLinearLayout);
         postBody = findViewById(R.id.postBodyEditText);
+
+        if (isComment) {
+            findViewById(R.id.textView4).setVisibility(View.INVISIBLE);
+            findViewById(R.id.smLinearLayout).setVisibility(View.INVISIBLE);
+        }
+
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,22 +91,32 @@ public class AddPostActivity extends AppCompatActivity {
         Switch instagramSwitch = findViewById(R.id.instagramSwitch);
         Switch facebookSwitch = findViewById(R.id.facebookSwitch);
 
-
-        if (facebookSwitch.isChecked()) {
-            SharePhoto.Builder builder = new SharePhoto.Builder();
-            builder.setCaption("Test!");
-
-            ShareDialog shareDialog = new ShareDialog(this);
-        }
-
-        if (twitterSwitch.isChecked()) {
+        if (isComment) {
             if (!selectedImages.isEmpty()) {
-                TweetWithImagesTask tweetWithImagesTask = new TweetWithImagesTask(this, postBody.getText().toString());
+                TweetWithImagesTask tweetWithImagesTask = new TweetWithImagesTask(this, postBody.getText().toString(), getIntent().getStringExtra("replyId"), getIntent().getStringExtra("replyUser"));
                 Uri[] uris = selectedImages.toArray(new Uri[selectedImages.size()]);
                 tweetWithImagesTask.execute(uris);
             } else {
-                TweetTask tweetTask = new TweetTask(this, postBody.getText().toString());
+                TweetTask tweetTask = new TweetTask(this, postBody.getText().toString(),  getIntent().getStringExtra("replyId"), getIntent().getStringExtra("replyUser"));
                 tweetTask.execute();
+            }
+        } else {
+            if (facebookSwitch.isChecked()) {
+                SharePhoto.Builder builder = new SharePhoto.Builder();
+                builder.setCaption("Test!");
+
+                ShareDialog shareDialog = new ShareDialog(this);
+            }
+
+            if (twitterSwitch.isChecked()) {
+                if (!selectedImages.isEmpty()) {
+                    TweetWithImagesTask tweetWithImagesTask = new TweetWithImagesTask(this, postBody.getText().toString());
+                    Uri[] uris = selectedImages.toArray(new Uri[selectedImages.size()]);
+                    tweetWithImagesTask.execute(uris);
+                } else {
+                    TweetTask tweetTask = new TweetTask(this, postBody.getText().toString());
+                    tweetTask.execute();
+                }
             }
         }
     }

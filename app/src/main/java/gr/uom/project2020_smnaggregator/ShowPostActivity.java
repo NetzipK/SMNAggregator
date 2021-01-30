@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class ShowPostActivity extends AppCompatActivity {
 
     private String hashtag;
-    private long postId;
+    private Long postId;
 
     private GetTweetTask getTweetTask;
 
@@ -21,6 +21,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
     private ImageButton likeButton;
     private ImageButton retweetButton;
+    private ImageButton commentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
         likeButton = findViewById(R.id.likeButton);
         retweetButton = findViewById(R.id.retweetButton);
+        commentButton = findViewById(R.id.commentButton);
 
         likeButton.setOnClickListener(v -> {
             if (v.getTag() == (Object)false) {
@@ -44,6 +46,16 @@ public class ShowPostActivity extends AppCompatActivity {
             } else if(v.getTag() == (Object)true) {
                 LikeTask likeTask = new LikeTask(this, postId, false);
                 likeTask.execute();
+            }
+        });
+
+        retweetButton.setOnClickListener(v -> {
+            if (v.getTag() == (Object)false) {
+                RetweetTask retweetTask = new RetweetTask(this, postId, true);
+                retweetTask.execute();
+            } else if(v.getTag() == (Object)true) {
+                RetweetTask retweetTask = new RetweetTask(this, postId, false);
+                retweetTask.execute();
             }
         });
     }

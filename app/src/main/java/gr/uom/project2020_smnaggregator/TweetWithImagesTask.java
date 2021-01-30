@@ -35,7 +35,7 @@ public class TweetWithImagesTask extends AsyncTask<Uri, Void, ArrayList<String>>
 
     private Context context;
     private String status;
-    private BigInteger replyToId;
+    private String replyToId;
     private String replyToUser;
 
     ArrayList<String> imageId = new ArrayList<>();
@@ -45,7 +45,7 @@ public class TweetWithImagesTask extends AsyncTask<Uri, Void, ArrayList<String>>
         this.status = status;
     }
 
-    public TweetWithImagesTask(Context context, String status, BigInteger replyToId, String replyToUser) {
+    public TweetWithImagesTask(Context context, String status, String replyToId, String replyToUser) {
         this(context, status);
         this.replyToId = replyToId;
         this.replyToUser = replyToUser;
@@ -115,7 +115,12 @@ public class TweetWithImagesTask extends AsyncTask<Uri, Void, ArrayList<String>>
     protected void onPostExecute(ArrayList<String> strings) {
         Log.d(TAG, strings.toString());
         if (imageId.size() > 0) {
-            TweetTask tweetTask = new TweetTask(context, status);
+            TweetTask tweetTask;
+            if (!replyToId.isEmpty()) {
+                tweetTask = new TweetTask(context, status, replyToId, replyToUser);
+            } else {
+                tweetTask = new TweetTask(context, status);
+            }
             ArrayList<BigInteger> bigIntegerArrayList = new ArrayList<BigInteger>();
             for (String s :
                     imageId) {

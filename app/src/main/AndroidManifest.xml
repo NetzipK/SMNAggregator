@@ -16,12 +16,7 @@
         <activity android:name=".ShowPostActivity"></activity>
         <activity
             android:name=".AddPostActivity"
-            android:label="New Post"
-            android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            android:label="New Post">
         </activity>
         <activity
             android:name=".HashtagActivity"

@@ -81,7 +81,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/commentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -102,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#FFF3F3F3"
-                android:tint="#B6B6B6"
                 app:srcCompat="@drawable/ic_retweet_non" />
         </LinearLayout>
 

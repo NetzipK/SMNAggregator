@@ -24,7 +24,7 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
 
     private Context context;
     private String status;
-    private BigInteger replyToId;
+    private String replyToId;
     private String replyToUser;
 
     public TweetTask(Context context, String status) {
@@ -32,7 +32,7 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
         this.status = status;
     }
 
-    public TweetTask(Context context, String status, BigInteger replyToId, String replyToUser) {
+    public TweetTask(Context context, String status, String replyToId, String replyToUser) {
         this(context, status);
         this.replyToId = replyToId;
         this.replyToUser = replyToUser;
@@ -51,8 +51,9 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
         OAuthRequest request = new OAuthRequest(Verb.POST, REMOTE_API);
         OAuth1AccessToken accessToken = new OAuth1AccessToken(acc_token, token_sec);
         if (replyToId != null && replyToUser != null) {
-            request.addBodyParameter("in_reply_to_status_id", String.valueOf(replyToId));
-            status = "@" + replyToUser + " " + status;
+            Log.d(TAG, "It's a comment!");
+            request.addBodyParameter("in_reply_to_status_id", replyToId);
+            status = replyToUser + " " + status;
         }
         request.addBodyParameter("status", status);
         if (integers.length > 0) {

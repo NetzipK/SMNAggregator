@@ -13,19 +13,19 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
-public class LikeTask extends AsyncTask<Void, Void, Boolean> {
+public class RetweetTask extends AsyncTask<Void, Void, Boolean> {
 
-    public static final String TAG = "MyAppLikeTask";
-    public static final String REMOTE_API = "https://api.twitter.com/1.1/favorites/";
+    public static final String TAG = "MyAppRetweetTask";
+    public static final String REMOTE_API = "https://api.twitter.com/1.1/statuses/";
 
     private Context context;
     private Long postId;
-    private Boolean toLike;
+    private Boolean toRetweet;
 
-    public LikeTask(Context context, long postId, boolean b) {
+    public RetweetTask(Context context, long postId, boolean b) {
         this.context = context;
         this.postId = postId;
-        toLike = b;
+        toRetweet = b;
     }
 
     @Override
@@ -37,10 +37,9 @@ public class LikeTask extends AsyncTask<Void, Void, Boolean> {
                 .apiSecret(context.getString(R.string.twitter_consumer_secret))
                 .build(TwitterApi.instance());
 
-        OAuthRequest request = new OAuthRequest(Verb.POST, REMOTE_API + (toLike ? "create.json" : "destroy.json") + "?id="+postId);
+        OAuthRequest request = new OAuthRequest(Verb.POST, REMOTE_API + (toRetweet ? "retweet" : "unretweet") + "/"+postId+".json");
         OAuth1AccessToken accessToken = new OAuth1AccessToken(acc_token, token_sec);
         service.signRequest(accessToken, request);
-        Log.d(TAG, postId+"");
         try {
             Response response = service.execute(request);
             Log.d(TAG, response.getBody());

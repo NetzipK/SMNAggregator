@@ -2,6 +2,7 @@ package gr.uom.project2020_smnaggregator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -103,6 +104,15 @@ public class GetTweetTask extends AsyncTask<Long, Void, String> {
                 retweetBtn.setImageResource(R.drawable.ic_retweet_non);
                 retweetBtn.setTag(false);
             }
+
+            ImageButton commentButton = activity.findViewById(R.id.commentButton);
+
+            commentButton.setOnClickListener(v -> {
+                Intent intentNewPost = new Intent(context, AddPostActivity.class);
+                intentNewPost.putExtra("replyId", postId.toString());
+                intentNewPost.putExtra("replyUser", "@"+userScreenName);
+                context.startActivity(intentNewPost);
+            });
 
         } catch (Exception e) {
             Log.e(TAG, "Error on json parsing!", e);
