@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.objects;
 
 import java.util.ArrayList;
 import java.util.Arrays;

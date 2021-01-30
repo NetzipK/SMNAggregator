@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
+
+import gr.uom.project2020_smnaggregator.R;
+import gr.uom.project2020_smnaggregator.objects.Tag;
 
 public class TrendsArrayAdapter extends ArrayAdapter<Tag> {
 

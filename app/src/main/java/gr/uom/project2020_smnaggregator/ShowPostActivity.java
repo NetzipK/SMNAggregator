@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import gr.uom.project2020_smnaggregator.tasks.GetTweetTask;
+import gr.uom.project2020_smnaggregator.tasks.LikeTask;
+import gr.uom.project2020_smnaggregator.tasks.RetweetTask;
+
 public class ShowPostActivity extends AppCompatActivity {
 
     private String hashtag;

@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,6 +15,10 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.net.URLEncoder;
 import java.util.List;
+
+import gr.uom.project2020_smnaggregator.parsers.PostsJsonParser;
+import gr.uom.project2020_smnaggregator.adapters.PostsArrayAdapter;
+import gr.uom.project2020_smnaggregator.objects.Post;
 
 public class GetPostsTask extends AsyncTask<String, Void, List<Post>> {
 

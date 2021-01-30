@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +27,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Map;
+
+import gr.uom.project2020_smnaggregator.R;
+import gr.uom.project2020_smnaggregator.tasks.TweetTask;
 
 public class TweetWithImagesTask extends AsyncTask<Uri, Void, ArrayList<String>> {
     public static final String TAG = "MyAppTweetWithImagesTask";

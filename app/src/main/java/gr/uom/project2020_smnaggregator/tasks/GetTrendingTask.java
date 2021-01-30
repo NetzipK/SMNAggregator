@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +16,10 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import gr.uom.project2020_smnaggregator.parsers.TagsJsonParser;
+import gr.uom.project2020_smnaggregator.adapters.TrendsArrayAdapter;
+import gr.uom.project2020_smnaggregator.objects.Tag;
 
 public class GetTrendingTask extends AsyncTask<String, Integer, List<Tag>> {
 

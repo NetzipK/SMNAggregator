@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.tasks;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,9 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
 import org.json.JSONObject;
+
+import gr.uom.project2020_smnaggregator.AddPostActivity;
+import gr.uom.project2020_smnaggregator.R;
 
 public class GetTweetTask extends AsyncTask<Long, Void, String> {
 

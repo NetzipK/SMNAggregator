@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import gr.uom.project2020_smnaggregator.adapters.PostsArrayAdapter;
+import gr.uom.project2020_smnaggregator.objects.Post;
+import gr.uom.project2020_smnaggregator.tasks.GetPostsTask;
 
 public class HashtagActivity extends AppCompatActivity {
 

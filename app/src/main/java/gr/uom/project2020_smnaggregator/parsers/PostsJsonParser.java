@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.parsers;
 
 import android.util.Log;
 
@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gr.uom.project2020_smnaggregator.objects.Post;
 
 public class PostsJsonParser {
 

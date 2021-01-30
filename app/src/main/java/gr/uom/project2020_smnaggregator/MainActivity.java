@@ -16,10 +16,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-
 import java.util.ArrayList;
+
+import gr.uom.project2020_smnaggregator.adapters.TrendsArrayAdapter;
+import gr.uom.project2020_smnaggregator.objects.Tag;
+import gr.uom.project2020_smnaggregator.tasks.GetTrendingTask;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.tasks;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,8 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.math.BigInteger;
+
+import gr.uom.project2020_smnaggregator.R;
 
 public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
 
@@ -84,10 +86,10 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean s) {
         if (s) {
-            Toast.makeText(context, "Posted to Tweeter!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Posted to Twitter!", Toast.LENGTH_SHORT).show();
             ((Activity) context).finish();
         }
-        else Toast.makeText(context, "Couldn't post to Tweeter!", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(context, "Couldn't post to Twitter!", Toast.LENGTH_SHORT).show();
 
         super.onPostExecute(s);
     }

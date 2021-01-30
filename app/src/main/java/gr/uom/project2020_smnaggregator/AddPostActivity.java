@@ -19,13 +19,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.share.model.ShareContent;
-import com.facebook.share.model.ShareMediaContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import gr.uom.project2020_smnaggregator.tasks.TweetTask;
+import gr.uom.project2020_smnaggregator.tasks.TweetWithImagesTask;
 
 public class AddPostActivity extends AppCompatActivity {
 
@@ -58,6 +59,7 @@ public class AddPostActivity extends AppCompatActivity {
         if (isComment) {
             findViewById(R.id.textView4).setVisibility(View.INVISIBLE);
             findViewById(R.id.smLinearLayout).setVisibility(View.INVISIBLE);
+            this.setTitle("Comment to " + intent.getStringExtra("replyUser"));
         }
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {

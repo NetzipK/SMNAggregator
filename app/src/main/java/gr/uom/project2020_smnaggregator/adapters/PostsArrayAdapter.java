@@ -1,4 +1,4 @@
-package gr.uom.project2020_smnaggregator;
+package gr.uom.project2020_smnaggregator.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,6 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gr.uom.project2020_smnaggregator.objects.Post;
+import gr.uom.project2020_smnaggregator.R;
 
 public class PostsArrayAdapter extends ArrayAdapter<Post> {
 
