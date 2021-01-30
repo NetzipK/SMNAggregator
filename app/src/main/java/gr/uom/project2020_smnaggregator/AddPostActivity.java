@@ -19,9 +19,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareMediaContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class AddPostActivity extends AppCompatActivity {
@@ -78,9 +81,19 @@ public class AddPostActivity extends AppCompatActivity {
         Switch instagramSwitch = findViewById(R.id.instagramSwitch);
         Switch facebookSwitch = findViewById(R.id.facebookSwitch);
 
+
+        if (facebookSwitch.isChecked()) {
+            SharePhoto.Builder builder = new SharePhoto.Builder();
+            builder.setCaption("Test!");
+
+            ShareDialog shareDialog = new ShareDialog(this);
+        }
+
         if (twitterSwitch.isChecked()) {
             if (!selectedImages.isEmpty()) {
-
+                TweetWithImagesTask tweetWithImagesTask = new TweetWithImagesTask(this, postBody.getText().toString());
+                Uri[] uris = selectedImages.toArray(new Uri[selectedImages.size()]);
+                tweetWithImagesTask.execute(uris);
             } else {
                 TweetTask tweetTask = new TweetTask(this, postBody.getText().toString());
                 tweetTask.execute();

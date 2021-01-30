@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.scribejava.apis.TwitterApi;
@@ -60,8 +61,11 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
                  integers) {
                 sb.append(integer + ",");
             }
-            request.addBodyParameter("media_id", sb.toString());
+            sb.deleteCharAt(sb.length() - 1);
+            Log.d(TAG, sb.toString());
+            request.addBodyParameter("media_ids", sb.toString());
         }
+        Log.d(TAG, request.getBodyParams().toString());
         service.signRequest(accessToken, request);
 
         try {
