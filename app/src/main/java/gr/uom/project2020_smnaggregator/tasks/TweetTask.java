@@ -54,7 +54,7 @@ public class TweetTask extends AsyncTask<BigInteger, Void, Boolean> {
         OAuth1AccessToken accessToken = new OAuth1AccessToken(acc_token, token_sec);
         if (replyToId != null && replyToUser != null) {
             Log.d(TAG, "It's a comment!");
-            request.addBodyParameter("in_reply_to_status_id", replyToId);
+            request.addParameter("in_reply_to_status_id", replyToId);
             status = replyToUser + " " + status;
         }
         request.addBodyParameter("status", status);

@@ -9,6 +9,7 @@ public class Post {
     private String postDate;
     private String postBody;
     private long postId;
+    private ArrayList<String> postImages = new ArrayList<>();
 
     public long getPostId() {
         return postId;
@@ -18,7 +19,6 @@ public class Post {
         this.postId = postId;
     }
 
-    private ArrayList<String> postImages = new ArrayList<>();
 
     public ArrayList<String> getPostImages() {
         return postImages;

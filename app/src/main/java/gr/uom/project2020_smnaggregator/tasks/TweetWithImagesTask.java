@@ -118,7 +118,7 @@ public class TweetWithImagesTask extends AsyncTask<Uri, Void, ArrayList<String>>
         Log.d(TAG, strings.toString());
         if (imageId.size() > 0) {
             TweetTask tweetTask;
-            if (!replyToId.isEmpty()) {
+            if (replyToId != null) {
                 tweetTask = new TweetTask(context, status, replyToId, replyToUser);
             } else {
                 tweetTask = new TweetTask(context, status);

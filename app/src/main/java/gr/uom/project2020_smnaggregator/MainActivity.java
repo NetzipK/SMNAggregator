@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     public void startHashtagActivity(String hashtag) {
         Intent intent = new Intent(MainActivity.this, HashtagActivity.class);
         if (hashtag.charAt(0) != '#')
-            hashtag = '#' + hashtag;
+//            hashtag = '#' + hashtag;
+            hashtag = hashtag;
         intent.putExtra("hashtag", hashtag);
         startActivity(intent);
     }

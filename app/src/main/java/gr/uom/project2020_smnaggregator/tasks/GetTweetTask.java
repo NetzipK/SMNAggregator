@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.scribejava.apis.TwitterApi;
@@ -16,8 +20,12 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import gr.uom.project2020_smnaggregator.AddPostActivity;
 import gr.uom.project2020_smnaggregator.R;
@@ -70,6 +78,16 @@ public class GetTweetTask extends AsyncTask<Long, Void, String> {
             String userName = jsonObj.getJSONObject("user").getString("name");
             String userScreenName = jsonObj.getJSONObject("user").getString("screen_name");
 
+            ArrayList<String> postImagesArray = new ArrayList<>();
+            if (jsonObj.getJSONObject("entities").has("media")) {
+                JSONArray postImages = jsonObj.getJSONObject("entities").getJSONArray("media");
+                for (int j = 0; j < postImages.length(); j++) {
+                    String postImageUrl = postImages.getJSONObject(j).getString("media_url_https");
+                    postImagesArray.add(postImageUrl);
+                }
+            }
+
+
             Activity activity = (Activity) context;
             TextView textView;
 
@@ -107,7 +125,7 @@ public class GetTweetTask extends AsyncTask<Long, Void, String> {
                 retweetBtn.setImageResource(R.drawable.ic_retweet_non);
                 retweetBtn.setTag(false);
             }
-
+            // todo: check if verified
             ImageButton commentButton = activity.findViewById(R.id.commentButton);
 
             commentButton.setOnClickListener(v -> {
@@ -116,6 +134,24 @@ public class GetTweetTask extends AsyncTask<Long, Void, String> {
                 intentNewPost.putExtra("replyUser", "@"+userScreenName);
                 context.startActivity(intentNewPost);
             });
+
+            if (postImagesArray.size() > 0) {
+                LinearLayout imagesLinearLayout = activity.findViewById(R.id.imagesLinearLayout);
+                imagesLinearLayout.removeAllViews();
+                ScrollView.LayoutParams lp = new ScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(0, 16, 0, 0);
+                imagesLinearLayout.setLayoutParams(lp);
+
+                for (String imgUrl :
+                        postImagesArray) {
+                    ImageView imgView = new ImageView(context);
+                    imagesLinearLayout.addView(imgView);
+                    LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    lp2.setMargins(2, 0, 0, 0);
+                    imgView.setLayoutParams(lp2);
+                    Picasso.with(context).load(imgUrl).resize(0, 600).into(imgView);
+                }
+            }
 
         } catch (Exception e) {
             Log.e(TAG, "Error on json parsing!", e);
