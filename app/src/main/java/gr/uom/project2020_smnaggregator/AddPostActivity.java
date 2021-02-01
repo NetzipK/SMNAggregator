@@ -19,7 +19,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 
@@ -104,10 +106,24 @@ public class AddPostActivity extends AppCompatActivity {
             }
         } else {
             if (facebookSwitch.isChecked()) {
-                SharePhoto.Builder builder = new SharePhoto.Builder();
-                builder.setCaption("Test!");
-
                 ShareDialog shareDialog = new ShareDialog(this);
+                if (selectedImages.isEmpty()) {
+                    ShareLinkContent content = new ShareLinkContent.Builder().setQuote(postBody.getText().toString()).setContentUrl(Uri.parse("google.com")).build();
+                    shareDialog.show(content);
+                } else {
+                    if (selectedImages.size() == 1) {
+                        SharePhoto photo = new SharePhoto.Builder().setImageUrl(selectedImages.get(0)).setCaption(postBody.getText().toString()).build();
+
+                        SharePhotoContent content = new SharePhotoContent.Builder().addPhoto(photo).build();
+                        shareDialog.show(content);
+                    } else {
+
+                    }
+                }
+            }
+
+            if (instagramSwitch.isChecked()) {
+
             }
 
             if (twitterSwitch.isChecked()) {
@@ -125,8 +141,18 @@ public class AddPostActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+            if (requestCode == PICK_IMAGE) {
+                Log.d(TAG, "PICK_IMAGE");
+            }
+            if (resultCode == RESULT_OK) {
+                Log.d(TAG, "RESULT_OK");
+            }
+            if (data != null) {
+                Log.d(TAG, "data not null");
+            }
+            if (requestCode == PICK_IMAGE && data != null) {
                 if (data.getData() != null) {
                     Log.d(TAG, data.toString() + "");
                     selectedImages.add(data.getData());
@@ -140,12 +166,12 @@ public class AddPostActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                Log.d(TAG, "You haven't picked any image!");
+                Log.e(TAG, "You haven't picked any image!");
             }
         } catch (Exception e) {
             Log.e(TAG, "Something went wrong", e);
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void addNewImageToLayout(Uri uri) {
